@@ -3,7 +3,6 @@ package com.moimah.microservicios.app.respuestas.models.entity;
 import com.moimah.commons.alumno.models.entity.Alumno;
 import com.moimah.commons.examenes.models.entity.Pregunta;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "respuestas")
@@ -14,12 +13,12 @@ public class Respuesta {
 
     private String texto;
 
-    @Transient
+    //@Transient
     private Alumno alumno;
 
     private Long alumnoId;
 
-    @Transient
+    //@Transient
     private Pregunta pregunta;
 
     private Long preguntaId;
