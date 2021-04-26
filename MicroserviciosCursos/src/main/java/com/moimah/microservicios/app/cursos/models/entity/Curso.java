@@ -1,5 +1,6 @@
 package com.moimah.microservicios.app.cursos.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.moimah.commons.alumno.models.entity.Alumno;
 import com.moimah.commons.examenes.models.entity.Examen;
 
@@ -24,7 +25,12 @@ public class Curso {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = {"curso"}, allowSetters = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CursoAlumno> cursoAlumnos;
+
+    //@OneToMany(fetch = FetchType.LAZY)
+    @Transient
     private List<Alumno> alumnos;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -38,6 +44,7 @@ public class Curso {
     public Curso() {
         this.alumnos = new ArrayList<>();
         this.examenes = new ArrayList<>();
+        this.cursoAlumnos = new ArrayList<>();
     }
 
     public Long getId() {
@@ -94,5 +101,21 @@ public class Curso {
 
     public void removeExamen(Examen examen) {
         this.examenes.remove(examen);
+    }
+
+    public List<CursoAlumno> getCursoAlumnos() {
+        return cursoAlumnos;
+    }
+
+    public void setCursoAlumnos(List<CursoAlumno> cursoAlumnos) {
+        this.cursoAlumnos = cursoAlumnos;
+    }
+
+    public void addCursoAlumnos(CursoAlumno cursoAlumno) {
+        this.cursoAlumnos.add(cursoAlumno);
+    }
+
+    public void removeCursoAlumnos(CursoAlumno cursoAlumno) {
+        this.cursoAlumnos.remove(cursoAlumno);
     }
 }
